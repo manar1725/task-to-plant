@@ -58,15 +58,18 @@ export const PlantGarden = ({ plant, tasksCompleted, totalTasks }: PlantGardenPr
                 boxShadow: 'var(--shadow-soft), inset 0 -20px 40px -20px hsl(40 30% 80%)'
               }}
             >
-              <img 
-                src={plant.image} 
-                alt={plant.name}
-                className="w-full h-full object-cover"
+              <div 
+                className="relative w-full h-full overflow-hidden"
                 style={{
-                  transform: `scale(${0.3 + (plant.growthStage / 100) * 0.7})`,
-                  transition: 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)'
+                  clipPath: `inset(${100 - plant.growthStage}% 0 0 0)`
                 }}
-              />
+              >
+                <img 
+                  src={plant.image} 
+                  alt={plant.name}
+                  className="w-full h-full object-cover transition-all duration-800 ease-out"
+                />
+              </div>
               {isFullyGrown && (
                 <div className="absolute inset-0 pointer-events-none">
                   {[...Array(6)].map((_, i) => (

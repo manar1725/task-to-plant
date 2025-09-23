@@ -57,6 +57,9 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        water: "hsl(var(--water))",
+        sunlight: "hsl(var(--sunlight))",
+        nutrients: "hsl(var(--nutrients))",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -80,10 +83,53 @@ export default {
             height: "0",
           },
         },
+        "plant-grow": {
+          "0%": {
+            transform: "scale(0.8) translateY(10px)",
+            opacity: "0.6",
+          },
+          "100%": {
+            transform: "scale(1) translateY(0)",
+            opacity: "1",
+          },
+        },
+        "gentle-float": {
+          "0%, 100%": {
+            transform: "translateY(0px)",
+          },
+          "50%": {
+            transform: "translateY(-8px)",
+          },
+        },
+        "sparkle": {
+          "0%, 100%": {
+            opacity: "0",
+            transform: "scale(0.5)",
+          },
+          "50%": {
+            opacity: "1",
+            transform: "scale(1)",
+          },
+        },
+        "task-complete": {
+          "0%": {
+            transform: "scale(1)",
+          },
+          "50%": {
+            transform: "scale(1.05)",
+          },
+          "100%": {
+            transform: "scale(1)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "plant-grow": "plant-grow 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards",
+        "gentle-float": "gentle-float 3s ease-in-out infinite",
+        "sparkle": "sparkle 1.5s ease-in-out infinite",
+        "task-complete": "task-complete 0.6s ease-out",
       },
     },
   },

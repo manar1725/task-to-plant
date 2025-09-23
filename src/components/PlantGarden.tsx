@@ -51,25 +51,73 @@ export const PlantGarden = ({ plant, tasksCompleted, totalTasks }: PlantGardenPr
         <div className="text-center space-y-4">
           <div className="relative">
             <div 
-              className={`mx-auto w-48 h-48 rounded-full bg-gradient-to-b from-accent to-secondary flex items-end justify-center overflow-hidden ${
+              className={`mx-auto w-48 h-48 rounded-full bg-gradient-to-b from-amber-100 to-amber-200 flex items-end justify-center overflow-hidden relative ${
                 shouldAnimate ? 'animate-plant-grow' : ''
               } ${isFullyGrown ? 'animate-gentle-float' : ''}`}
               style={{
                 boxShadow: 'var(--shadow-soft), inset 0 -20px 40px -20px hsl(40 30% 80%)'
               }}
             >
-              <div 
-                className="relative w-full h-full overflow-hidden"
-                style={{
-                  clipPath: `inset(${100 - plant.growthStage}% 0 0 0)`
-                }}
-              >
-                <img 
-                  src={plant.image} 
-                  alt={plant.name}
-                  className="w-full h-full object-cover transition-all duration-800 ease-out"
-                />
+              {/* Soil base */}
+              <div className="absolute bottom-0 w-full h-8 bg-gradient-to-t from-amber-800 to-amber-600 rounded-b-full"></div>
+              
+              {/* Growth stages */}
+              <div className="relative w-full h-full flex items-end justify-center pb-8">
+                {/* Seed stage (0-10%) */}
+                {plant.growthStage >= 0 && (
+                  <div className="absolute bottom-2 w-2 h-2 bg-amber-900 rounded-full"></div>
+                )}
+                
+                {/* Sprout stage (10-30%) */}
+                {plant.growthStage >= 10 && (
+                  <div className="absolute bottom-4 w-1 bg-green-600 rounded-t-full transition-all duration-1000"
+                       style={{ height: `${Math.min((plant.growthStage - 10) / 20 * 20, 20)}px` }}>
+                  </div>
+                )}
+                
+                {/* Small plant with leaves (30-60%) */}
+                {plant.growthStage >= 30 && (
+                  <div className="absolute bottom-4 flex flex-col items-center">
+                    <div className="w-2 bg-green-600 rounded-t-full transition-all duration-1000"
+                         style={{ height: `${Math.min((plant.growthStage - 30) / 30 * 40, 40)}px` }}>
+                    </div>
+                    <div className="absolute top-2 flex gap-1">
+                      <div className="w-2 h-2 bg-green-500 rounded-full -rotate-12"></div>
+                      <div className="w-2 h-2 bg-green-500 rounded-full rotate-12"></div>
+                    </div>
+                  </div>
+                )}
+                
+                {/* Mature plant (60-90%) */}
+                {plant.growthStage >= 60 && (
+                  <div className="absolute bottom-4 flex flex-col items-center">
+                    <div className="w-3 bg-green-700 rounded-t-full transition-all duration-1000"
+                         style={{ height: `${Math.min((plant.growthStage - 60) / 30 * 60, 60)}px` }}>
+                    </div>
+                    <div className="absolute top-1 flex gap-2">
+                      <div className="w-3 h-4 bg-green-500 rounded-full -rotate-45 -translate-x-1"></div>
+                      <div className="w-3 h-4 bg-green-500 rounded-full rotate-45 translate-x-1"></div>
+                    </div>
+                    <div className="absolute top-4 flex gap-3">
+                      <div className="w-2 h-3 bg-green-400 rounded-full -rotate-30"></div>
+                      <div className="w-2 h-3 bg-green-400 rounded-full rotate-30"></div>
+                    </div>
+                  </div>
+                )}
+                
+                {/* Full bloom with final plant image (90-100%) */}
+                {plant.growthStage >= 90 && (
+                  <div className="absolute bottom-0 w-full h-full flex items-end justify-center pb-8 transition-all duration-1000"
+                       style={{ opacity: (plant.growthStage - 90) / 10 }}>
+                    <img 
+                      src={plant.image} 
+                      alt={plant.name}
+                      className="w-32 h-32 object-cover rounded-lg"
+                    />
+                  </div>
+                )}
               </div>
+              
               {isFullyGrown && (
                 <div className="absolute inset-0 pointer-events-none">
                   {[...Array(6)].map((_, i) => (

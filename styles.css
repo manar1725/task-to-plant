@@ -1,0 +1,667 @@
+/* Design System Variables */
+:root {
+  /* Colors */
+  --background: hsl(120 15% 97%);
+  --foreground: hsl(120 10% 15%);
+  --primary: hsl(120 50% 40%);
+  --primary-foreground: hsl(0 0% 98%);
+  --secondary: hsl(120 20% 90%);
+  --secondary-foreground: hsl(120 10% 20%);
+  --muted: hsl(120 15% 95%);
+  --muted-foreground: hsl(120 5% 45%);
+  --accent: hsl(120 25% 85%);
+  --accent-foreground: hsl(120 10% 25%);
+  --border: hsl(120 20% 88%);
+  --input: hsl(120 20% 92%);
+  --ring: hsl(120 50% 45%);
+  
+  /* Plant-specific colors */
+  --water: hsl(200 80% 50%);
+  --sunlight: hsl(45 90% 60%);
+  --nutrients: hsl(100 60% 50%);
+  
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, hsl(120 50% 40%), hsl(120 60% 50%));
+  --gradient-subtle: linear-gradient(180deg, var(--background), var(--accent));
+  
+  /* Shadows */
+  --shadow-soft: 0 4px 20px -4px hsl(120 10% 20% / 0.1);
+  --shadow-elegant: 0 10px 30px -10px hsl(120 50% 40% / 0.3);
+  
+  /* Animation */
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: hsl(120 10% 8%);
+    --foreground: hsl(120 5% 95%);
+    --primary: hsl(120 50% 60%);
+    --primary-foreground: hsl(120 10% 8%);
+    --secondary: hsl(120 10% 15%);
+    --secondary-foreground: hsl(120 5% 80%);
+    --muted: hsl(120 10% 12%);
+    --muted-foreground: hsl(120 5% 60%);
+    --accent: hsl(120 15% 18%);
+    --accent-foreground: hsl(120 5% 85%);
+    --border: hsl(120 15% 20%);
+    --input: hsl(120 15% 16%);
+    --ring: hsl(120 50% 55%);
+  }
+}
+
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  background: var(--background);
+  color: var(--foreground);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Utility classes */
+.hidden { display: none !important; }
+
+/* Plant Selection Styles */
+.plant-selection {
+  text-align: center;
+  animation: fadeIn 0.6s ease-out;
+}
+
+.header {
+  margin-bottom: 3rem;
+}
+
+.main-title {
+  font-size: 3rem;
+  font-weight: bold;
+  background: var(--gradient-primary);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  color: var(--muted-foreground);
+}
+
+.plant-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.plant-card {
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-soft);
+  transition: var(--transition-smooth);
+  cursor: pointer;
+}
+
+.plant-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-elegant);
+}
+
+.plant-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.plant-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.badges {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.difficulty-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.difficulty-badge.easy { background: hsl(120 60% 90%); color: hsl(120 60% 30%); }
+.difficulty-badge.medium { background: hsl(45 60% 90%); color: hsl(45 60% 30%); }
+.difficulty-badge.hard { background: hsl(0 60% 90%); color: hsl(0 60% 30%); }
+
+.type-badge {
+  padding: 0.25rem 0.75rem;
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.plant-description {
+  color: var(--muted-foreground);
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.choose-btn {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  width: 100%;
+}
+
+.choose-btn:hover {
+  background: hsl(120 50% 35%);
+  transform: translateY(-1px);
+}
+
+/* Main Game Styles */
+.main-game {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.game-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 2rem;
+}
+
+.reset-btn {
+  background: var(--accent);
+  color: var(--accent-foreground);
+  border: 1px solid var(--border);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.reset-btn:hover {
+  background: var(--secondary);
+}
+
+/* Plant Garden Styles */
+.plant-garden-card {
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-soft);
+  text-align: center;
+}
+
+.plant-pot {
+  width: 12rem;
+  height: 12rem;
+  margin: 0 auto 2rem;
+  border-radius: 50%;
+  background: linear-gradient(to bottom, hsl(40 20% 90%), hsl(40 30% 80%));
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft), inset 0 -20px 40px -20px hsl(40 30% 80%);
+}
+
+.soil {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2rem;
+  background: linear-gradient(to top, hsl(30 40% 30%), hsl(30 50% 40%));
+  border-radius: 0 0 50% 50%;
+}
+
+.plant-stages {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 2rem;
+}
+
+/* Growth stage elements */
+.seed {
+  position: absolute;
+  bottom: 0.5rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  background: hsl(30 40% 20%);
+  border-radius: 50%;
+}
+
+.sprout {
+  position: absolute;
+  bottom: 1rem;
+  width: 0.25rem;
+  background: hsl(100 60% 40%);
+  border-radius: 0.125rem 0.125rem 0 0;
+  transition: height 1s ease-out;
+}
+
+.small-plant {
+  position: absolute;
+  bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.small-stem {
+  width: 0.5rem;
+  background: hsl(100 60% 40%);
+  border-radius: 0.25rem 0.25rem 0 0;
+  transition: height 1s ease-out;
+}
+
+.small-leaves {
+  position: absolute;
+  top: 0.5rem;
+  display: flex;
+  gap: 0.25rem;
+}
+
+.small-leaf {
+  width: 0.5rem;
+  height: 0.5rem;
+  background: hsl(100 50% 50%);
+  border-radius: 50%;
+}
+
+.small-leaf:first-child { transform: rotate(-12deg); }
+.small-leaf:last-child { transform: rotate(12deg); }
+
+.mature-plant {
+  position: absolute;
+  bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mature-stem {
+  width: 0.75rem;
+  background: hsl(100 60% 35%);
+  border-radius: 0.375rem 0.375rem 0 0;
+  transition: height 1s ease-out;
+}
+
+.mature-leaves-top {
+  position: absolute;
+  top: 0.25rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.mature-leaves-mid {
+  position: absolute;
+  top: 1rem;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.mature-leaf-large {
+  width: 0.75rem;
+  height: 1rem;
+  background: hsl(100 50% 50%);
+  border-radius: 50%;
+}
+
+.mature-leaf-small {
+  width: 0.5rem;
+  height: 0.75rem;
+  background: hsl(100 40% 60%);
+  border-radius: 50%;
+}
+
+.bloom-image {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 2rem;
+  transition: opacity 1s ease-out;
+}
+
+.bloom-image img {
+  width: 8rem;
+  height: 8rem;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+.sparkles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.sparkle {
+  position: absolute;
+  width: 0.5rem;
+  height: 0.5rem;
+  background: var(--sunlight);
+  border-radius: 50%;
+  animation: sparkle 2s infinite ease-in-out;
+}
+
+.plant-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.plant-type-badge {
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+}
+
+.bloom-badge {
+  background: linear-gradient(to right, var(--sunlight), var(--primary));
+  color: var(--primary-foreground);
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-weight: 500;
+  margin-top: 1rem;
+  display: inline-block;
+  animation: gentleFloat 3s ease-in-out infinite;
+}
+
+/* Care Status Styles */
+.care-status-card {
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.care-title {
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.care-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.care-item {
+  text-align: center;
+  space-y: 0.5rem;
+}
+
+.care-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.care-label {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  margin-bottom: 0.5rem;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 0.5rem;
+  background: var(--muted);
+  border-radius: 9999px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.progress-bar.large {
+  height: 0.75rem;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.5s ease-out;
+}
+
+.progress-fill.water { background: var(--water); }
+.progress-fill.sunlight { background: var(--sunlight); }
+.progress-fill.nutrients { background: var(--nutrients); }
+.progress-fill.primary { background: var(--primary); }
+
+.progress-text {
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* Task Manager Styles */
+.task-manager-card {
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.task-header {
+  margin-bottom: 1.5rem;
+}
+
+.task-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.task-progress {
+  margin-bottom: 1rem;
+}
+
+.task-counter-text {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  margin-top: 0.5rem;
+  display: block;
+}
+
+.add-task-section {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.task-input {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--input);
+  color: var(--foreground);
+  outline: none;
+}
+
+.task-input:focus {
+  border-color: var(--ring);
+}
+
+.add-task-btn {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.add-task-btn:hover {
+  background: hsl(120 50% 35%);
+}
+
+.task-list {
+  space-y: 0.5rem;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: var(--muted);
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+  transition: var(--transition-smooth);
+}
+
+.task-item.completed {
+  opacity: 0.7;
+  background: var(--accent);
+}
+
+.task-checkbox {
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+}
+
+.task-text {
+  flex: 1;
+  transition: var(--transition-smooth);
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: var(--muted-foreground);
+}
+
+.delete-btn {
+  background: hsl(0 60% 50%);
+  color: white;
+  border: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-smooth);
+}
+
+.delete-btn:hover {
+  background: hsl(0 70% 45%);
+}
+
+.completion-message {
+  text-align: center;
+  padding: 2rem;
+  background: var(--accent);
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+}
+
+.completion-message h3 {
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes gentleFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes plantGrow {
+  0% { transform: scale(0.8); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.animate-plant-grow {
+  animation: plantGrow 0.8s ease-out;
+}
+
+.animate-gentle-float {
+  animation: gentleFloat 3s ease-in-out infinite;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  #app {
+    padding: 1rem;
+  }
+  
+  .main-title {
+    font-size: 2rem;
+  }
+  
+  .plant-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .care-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .add-task-section {
+    flex-direction: column;
+  }
+}

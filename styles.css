@@ -213,6 +213,30 @@ body {
   background: var(--secondary);
 }
 
+/* Game Description Styles */
+.game-description-card {
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-soft);
+  text-align: center;
+}
+
+.game-description-card h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary);
+  margin-bottom: 0.75rem;
+}
+
+.game-description-card p {
+  color: var(--muted-foreground);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
 /* Plant Garden Styles */
 .plant-garden-card {
   background: var(--background);

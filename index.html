@@ -82,10 +82,35 @@
                 <button id="reset-btn" class="reset-btn">🌱 Start Over</button>
             </div>
             
-            <!-- Game Description -->
-            <div class="game-description-card">
-                <h2>🌱 How It Works</h2>
-                <p>Complete tasks to care for your plant! Each finished task provides water, sunlight, or nutrients. Watch your plant grow from a tiny seed to full bloom as you become more productive.</p>
+            <!-- Game Info Sections -->
+            <div class="game-info-container">
+                <div class="info-section">
+                    <button class="info-toggle" data-section="about">
+                        <span class="info-icon">🌱</span>
+                        <span>About</span>
+                        <span class="toggle-arrow">▼</span>
+                    </button>
+                    <div class="info-content" id="about-content">
+                        <p>Complete tasks to care for your plant! Each finished task provides water, sunlight, or nutrients. Watch your plant grow from a tiny seed to full bloom as you become more productive.</p>
+                    </div>
+                </div>
+                
+                <div class="info-section">
+                    <button class="info-toggle" data-section="howto">
+                        <span class="info-icon">📝</span>
+                        <span>How to Play</span>
+                        <span class="toggle-arrow">▼</span>
+                    </button>
+                    <div class="info-content hidden" id="howto-content">
+                        <ol>
+                            <li>Choose your plant companion from the selection screen</li>
+                            <li>Add tasks or pick from suggested chores</li>
+                            <li>Complete tasks to give your plant care (water, sunlight, nutrients)</li>
+                            <li>Watch your plant grow through 5 stages: seed → sprout → leaves → mature → full bloom</li>
+                            <li>Complete all tasks to see your plant reach its beautiful final form!</li>
+                        </ol>
+                    </div>
+                </div>
             </div>
             
             <!-- Plant Garden -->
@@ -155,6 +180,24 @@
                 <div class="add-task-section">
                     <input type="text" id="task-input" class="task-input" placeholder="Add a new task...">
                     <button id="add-task-btn" class="add-task-btn">Add Task</button>
+                </div>
+                
+                <div class="suggested-chores">
+                    <h4 class="suggested-title">💡 Quick Add Chores:</h4>
+                    <div class="chore-buttons">
+                        <button class="chore-btn" data-chore="Make bed">🛏️ Make bed</button>
+                        <button class="chore-btn" data-chore="Do dishes">🍽️ Do dishes</button>
+                        <button class="chore-btn" data-chore="Take out trash">🗑️ Take out trash</button>
+                        <button class="chore-btn" data-chore="Vacuum living room">🧹 Vacuum living room</button>
+                        <button class="chore-btn" data-chore="Laundry">👕 Laundry</button>
+                        <button class="chore-btn" data-chore="Water plants">🌿 Water plants</button>
+                        <button class="chore-btn" data-chore="Clean bathroom">🚿 Clean bathroom</button>
+                        <button class="chore-btn" data-chore="Organize desk">📚 Organize desk</button>
+                        <button class="chore-btn" data-chore="Grocery shopping">🛒 Grocery shopping</button>
+                        <button class="chore-btn" data-chore="Exercise 30 min">💪 Exercise 30 min</button>
+                        <button class="chore-btn" data-chore="Call family">📞 Call family</button>
+                        <button class="chore-btn" data-chore="Read for 20 min">📖 Read for 20 min</button>
+                    </div>
                 </div>
                 
                 <div id="task-list" class="task-list">

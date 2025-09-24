@@ -70,6 +70,20 @@ class PlantProductivityGame {
                 this.addTask();
             }
         });
+        
+        // Info section toggles
+        document.querySelectorAll('.info-toggle').forEach(toggle => {
+            toggle.addEventListener('click', (e) => {
+                this.toggleInfoSection(e.currentTarget);
+            });
+        });
+        
+        // Quick add chore buttons
+        document.querySelectorAll('.chore-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                this.addQuickChore(e.currentTarget.dataset.chore);
+            });
+        });
     }
     
     showPlantSelection() {
@@ -98,6 +112,21 @@ class PlantProductivityGame {
         this.tasks = [];
         this.taskIdCounter = 0;
         this.showPlantSelection();
+    }
+    
+    toggleInfoSection(toggle) {
+        const section = toggle.dataset.section;
+        const content = document.getElementById(`${section}-content`);
+        const arrow = toggle.querySelector('.toggle-arrow');
+        
+        content.classList.toggle('hidden');
+        toggle.classList.toggle('active');
+    }
+    
+    addQuickChore(choreText) {
+        const input = document.getElementById('task-input');
+        input.value = choreText;
+        this.addTask();
     }
     
     addTask() {

@@ -9,6 +9,10 @@ This guide explains how to containerize and deploy the Plant Productivity Garden
 - Docker installed on your system
 - Docker Compose (optional, for easier management)
 
+## ⚠️ Docker Build Fix
+
+**Important:** The original build issue was caused by using `npm ci --only=production` which excludes devDependencies. Since Vite is a devDependency but required for building, the Dockerfile has been updated to use `npm ci` (installs all dependencies).
+
 ## 🚀 Quick Start
 
 ### Option 1: Using the automated script
@@ -18,8 +22,11 @@ This guide explains how to containerize and deploy the Plant Productivity Garden
 
 ### Option 2: Manual Docker commands
 ```bash
-# Build the image
+# Build the image (standard version)
 docker build -t plant-productivity-garden:latest .
+
+# Build the secure version (recommended for production)
+docker build -f Dockerfile.secure -t plant-productivity-garden:secure .
 
 # Run the container
 docker run -d \
@@ -31,7 +38,11 @@ docker run -d \
 
 ### Option 3: Using Docker Compose
 ```bash
-docker-compose up -d
+# Standard version
+docker-compose up -d plant-productivity-garden
+
+# Secure version
+docker-compose up -d plant-productivity-garden-secure
 ```
 
 ## 🌐 Access the Application

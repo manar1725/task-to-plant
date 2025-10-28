@@ -2,6 +2,7 @@ import { useState } from "react";
 import { PlantGarden } from "@/components/PlantGarden";
 import { TaskManager, Task } from "@/components/TaskManager";
 import { PlantSelection } from "@/components/PlantSelection";
+import PopupMenu from "@/components/PopupMenu";
 import { Button } from "@/components/ui/button";
 import { RotateCcw } from "lucide-react";
 
@@ -49,6 +50,7 @@ const Index = () => {
   if (!selectedPlant) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-background via-accent/10 to-secondary/20 p-4">
+        <PopupMenu />
         <div className="container mx-auto max-w-4xl py-8">
           <PlantSelection onPlantSelect={handlePlantSelect} />
         </div>
@@ -58,6 +60,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-accent/10 to-secondary/20 p-4">
+      <PopupMenu />
       <div className="container mx-auto max-w-6xl py-8">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-primary mb-2">

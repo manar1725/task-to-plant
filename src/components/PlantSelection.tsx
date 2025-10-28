@@ -67,7 +67,7 @@ export const PlantSelection = ({ onPlantSelect }: PlantSelectionProps) => {
   return (
     <div className="space-y-6">
       <div className="text-center space-y-2">
-        <h2 className="text-3xl font-bold text-primary">Choose Your Plant Companion</h2>
+        <h2 className="text-3xl font-bold text-primary">Choose the plant that will satisfy you</h2>
         <p className="text-muted-foreground">
           Select a plant that will grow with your productivity journey
         </p>

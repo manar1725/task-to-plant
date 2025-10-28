@@ -12,24 +12,28 @@ class PlantProductivityGame {
                 name: 'Sunny Sunflower',
                 type: 'Flower',
                 image: 'src/assets/sunflower.jpg',
-                growthStage: 0,
-                stages: ['seed', 'sprout', 'seedling', 'budding', 'flowering', 'mature']
+                growthStage: 0
             },
-            beet: {
-                id: 'beet',
-                name: 'Garden Beet',
-                type: 'Root Vegetable',
-                image: 'src/assets/beet.jpg',
-                growthStage: 0,
-                stages: ['seed', 'sprout', 'leaves', 'growing', 'bulbing', 'mature']
+            rose: {
+                id: 'rose',
+                name: 'Royal Rose',
+                type: 'Flower',
+                image: 'src/assets/rose.jpg',
+                growthStage: 0
             },
-            pumpkin: {
-                id: 'pumpkin',
-                name: 'Prize Pumpkin',
-                type: 'Vine',
-                image: 'src/assets/pumpkin.jpg',
-                growthStage: 0,
-                stages: ['seed', 'sprout', 'vine', 'flowering', 'fruiting', 'mature']
+            basil: {
+                id: 'basil',
+                name: 'Aromatic Basil',
+                type: 'Herb',
+                image: 'src/assets/basil.jpg',
+                growthStage: 0
+            },
+            tomato: {
+                id: 'tomato',
+                name: 'Cherry Tomato',
+                type: 'Vegetable',
+                image: 'src/assets/tomato.jpg',
+                growthStage: 0
             }
         };
         
@@ -43,18 +47,11 @@ class PlantProductivityGame {
     
     bindEvents() {
         // Plant selection
-        const plantSelector = document.getElementById('plant-selector');
-        const confirmBtn = document.getElementById('confirm-plant-btn');
-        
-        plantSelector.addEventListener('change', () => {
-            confirmBtn.disabled = !plantSelector.value;
-        });
-        
-        confirmBtn.addEventListener('click', () => {
-            const plantId = plantSelector.value;
-            if (plantId) {
+        document.querySelectorAll('.plant-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const plantId = card.dataset.plant;
                 this.selectPlant(plantId);
-            }
+            });
         });
         
         // Reset button
@@ -134,7 +131,6 @@ class PlantProductivityGame {
     
     addTask() {
         const input = document.getElementById('task-input');
-        const datetimeInput = document.getElementById('task-datetime');
         const taskText = input.value.trim();
         
         if (!taskText) return;
@@ -142,13 +138,11 @@ class PlantProductivityGame {
         const task = {
             id: this.taskIdCounter++,
             text: taskText,
-            completed: false,
-            dueDate: datetimeInput.value || null
+            completed: false
         };
         
         this.tasks.push(task);
         input.value = '';
-        datetimeInput.value = '';
         
         this.updateTaskDisplay();
         this.updatePlantGrowth();
@@ -365,16 +359,10 @@ class PlantProductivityGame {
             const taskItem = document.createElement('div');
             taskItem.className = `task-item ${task.completed ? 'completed' : ''}`;
             
-            const dueDateStr = task.dueDate ? 
-                `<span class="task-due-date">Due: ${new Date(task.dueDate).toLocaleString()}</span>` : '';
-            
             taskItem.innerHTML = `
                 <input type="checkbox" class="task-checkbox" ${task.completed ? 'checked' : ''} 
                        onchange="game.toggleTask(${task.id})">
-                <div class="task-content">
-                    <span class="task-text">${task.text}</span>
-                    ${dueDateStr}
-                </div>
+                <span class="task-text">${task.text}</span>
                 <button class="delete-btn" onclick="game.deleteTask(${task.id})">×</button>
             `;
             

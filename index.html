@@ -1,24 +1,217 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plant Productivity Garden - Grow Your Tasks</title>
-    <meta name="description" content="A beautiful productivity game where completing tasks nurtures your virtual plant to full bloom. Turn your daily tasks into a rewarding growing experience." />
-    <meta name="author" content="Plant Productivity Garden" />
-
-    <meta property="og:title" content="Plant Productivity Garden - Grow Your Tasks" />
-    <meta property="og:description" content="A beautiful productivity game where completing tasks nurtures your virtual plant to full bloom. Turn your daily tasks into a rewarding growing experience." />
-    <meta property="og:type" content="website" />
-    <!-- <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" /> -->
-
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@lovable_dev" />
-    <!-- <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" /> -->
-  </head>
-
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+    <meta name="description" content="A beautiful productivity game where completing tasks nurtures your virtual plant to full bloom. Turn your daily tasks into a rewarding growing experience.">
+    
+    <meta property="og:title" content="Plant Productivity Garden - Grow Your Tasks">
+    <meta property="og:description" content="A beautiful productivity game where completing tasks nurtures your virtual plant to full bloom. Turn your daily tasks into a rewarding growing experience.">
+    <meta property="og:type" content="website">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Plant Selection Screen -->
+        <div id="plant-selection" class="plant-selection">
+            <header class="header">
+                <h1 class="main-title">Choose Your Plant Companion</h1>
+                <p class="subtitle">Select a plant to nurture as you complete your daily tasks</p>
+            </header>
+            
+            <div class="plant-grid">
+                <div class="plant-card" data-plant="sunflower">
+                    <img src="src/assets/sunflower.jpg" alt="Bright Sunflower" class="plant-image">
+                    <div class="plant-info">
+                        <h3 class="plant-name">Sunny Sunflower</h3>
+                        <div class="badges">
+                            <span class="difficulty-badge easy">Easy</span>
+                            <span class="type-badge">Flower</span>
+                        </div>
+                        <p class="plant-description">A cheerful companion that brings sunshine to your productivity journey. Easy to care for and always optimistic!</p>
+                        <button class="choose-btn">Choose This Plant</button>
+                    </div>
+                </div>
+                
+                <div class="plant-card" data-plant="rose">
+                    <img src="src/assets/rose.jpg" alt="Elegant Rose" class="plant-image">
+                    <div class="plant-info">
+                        <h3 class="plant-name">Royal Rose</h3>
+                        <div class="badges">
+                            <span class="difficulty-badge medium">Medium</span>
+                            <span class="type-badge">Flower</span>
+                        </div>
+                        <p class="plant-description">An elegant and sophisticated companion. Requires dedication but rewards you with stunning beauty.</p>
+                        <button class="choose-btn">Choose This Plant</button>
+                    </div>
+                </div>
+                
+                <div class="plant-card" data-plant="basil">
+                    <img src="src/assets/basil.jpg" alt="Fresh Basil" class="plant-image">
+                    <div class="plant-info">
+                        <h3 class="plant-name">Aromatic Basil</h3>
+                        <div class="badges">
+                            <span class="difficulty-badge easy">Easy</span>
+                            <span class="type-badge">Herb</span>
+                        </div>
+                        <p class="plant-description">A practical and fragrant herb that grows alongside your productivity. Perfect for beginners!</p>
+                        <button class="choose-btn">Choose This Plant</button>
+                    </div>
+                </div>
+                
+                <div class="plant-card" data-plant="tomato">
+                    <img src="src/assets/tomato.jpg" alt="Cherry Tomato" class="plant-image">
+                    <div class="plant-info">
+                        <h3 class="plant-name">Cherry Tomato</h3>
+                        <div class="badges">
+                            <span class="difficulty-badge hard">Hard</span>
+                            <span class="type-badge">Vegetable</span>
+                        </div>
+                        <p class="plant-description">A rewarding challenge that produces delicious results. Requires consistent care and attention to detail.</p>
+                        <button class="choose-btn">Choose This Plant</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Game Screen -->
+        <div id="main-game" class="main-game hidden">
+            <div class="game-header">
+                <button id="reset-btn" class="reset-btn">🌱 Start Over</button>
+            </div>
+            
+            <!-- Game Info Sections -->
+            <div class="game-info-container">
+                <div class="info-section">
+                    <button class="info-toggle" data-section="about">
+                        <span class="info-icon">🌱</span>
+                        <span>About</span>
+                        <span class="toggle-arrow">▼</span>
+                    </button>
+                    <div class="info-content" id="about-content">
+                        <p>Complete tasks to care for your plant! Each finished task provides water, sunlight, or nutrients. Watch your plant grow from a tiny seed to full bloom as you become more productive.</p>
+                    </div>
+                </div>
+                
+                <div class="info-section">
+                    <button class="info-toggle" data-section="howto">
+                        <span class="info-icon">📝</span>
+                        <span>How to Play</span>
+                        <span class="toggle-arrow">▼</span>
+                    </button>
+                    <div class="info-content hidden" id="howto-content">
+                        <ol>
+                            <li>Choose your plant companion from the selection screen</li>
+                            <li>Add tasks or pick from suggested chores</li>
+                            <li>Complete tasks to give your plant care (water, sunlight, nutrients)</li>
+                            <li>Watch your plant grow through 5 stages: seed → sprout → leaves → mature → full bloom</li>
+                            <li>Complete all tasks to see your plant reach its beautiful final form!</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Plant Garden -->
+            <div id="plant-garden" class="plant-garden-card">
+                <div class="plant-display">
+                    <div id="plant-pot" class="plant-pot">
+                        <div class="soil"></div>
+                        <div id="plant-stages" class="plant-stages">
+                            <!-- Growth stages will be added here by JavaScript -->
+                        </div>
+                        <div id="sparkles" class="sparkles hidden"></div>
+                    </div>
+                </div>
+                
+                <div class="plant-info-section">
+                    <h3 id="plant-name" class="plant-title"></h3>
+                    <span id="plant-type" class="plant-type-badge"></span>
+                    <div id="bloom-badge" class="bloom-badge hidden">🌟 In Full Bloom!</div>
+                </div>
+            </div>
+            
+            <!-- Plant Care Status -->
+            <div class="care-status-card">
+                <h4 class="care-title">Plant Care Status</h4>
+                <div class="care-grid">
+                    <div class="care-item">
+                        <div class="care-icon">💧</div>
+                        <div class="care-label">Water</div>
+                        <div class="progress-bar">
+                            <div id="water-progress" class="progress-fill water"></div>
+                        </div>
+                        <div id="water-percent" class="progress-text">0%</div>
+                    </div>
+                    
+                    <div class="care-item">
+                        <div class="care-icon">☀️</div>
+                        <div class="care-label">Sunlight</div>
+                        <div class="progress-bar">
+                            <div id="sunlight-progress" class="progress-fill sunlight"></div>
+                        </div>
+                        <div id="sunlight-percent" class="progress-text">0%</div>
+                    </div>
+                    
+                    <div class="care-item">
+                        <div class="care-icon">🍃</div>
+                        <div class="care-label">Nutrients</div>
+                        <div class="progress-bar">
+                            <div id="nutrients-progress" class="progress-fill nutrients"></div>
+                        </div>
+                        <div id="nutrients-percent" class="progress-text">0%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Task Manager -->
+            <div class="task-manager-card">
+                <div class="task-header">
+                    <h3 class="task-title">Your Tasks</h3>
+                    <div class="task-progress">
+                        <div class="progress-bar large">
+                            <div id="task-progress" class="progress-fill primary"></div>
+                        </div>
+                        <span id="task-counter" class="task-counter-text">0 / 0 tasks completed</span>
+                    </div>
+                </div>
+                
+                <div class="add-task-section">
+                    <input type="text" id="task-input" class="task-input" placeholder="Add a new task...">
+                    <button id="add-task-btn" class="add-task-btn">Add Task</button>
+                </div>
+                
+                <div class="suggested-chores">
+                    <h4 class="suggested-title">💡 Quick Add Chores:</h4>
+                    <div class="chore-buttons">
+                        <button class="chore-btn" data-chore="Make bed">🛏️ Make bed</button>
+                        <button class="chore-btn" data-chore="Do dishes">🍽️ Do dishes</button>
+                        <button class="chore-btn" data-chore="Take out trash">🗑️ Take out trash</button>
+                        <button class="chore-btn" data-chore="Vacuum living room">🧹 Vacuum living room</button>
+                        <button class="chore-btn" data-chore="Laundry">👕 Laundry</button>
+                        <button class="chore-btn" data-chore="Water plants">🌿 Water plants</button>
+                        <button class="chore-btn" data-chore="Clean bathroom">🚿 Clean bathroom</button>
+                        <button class="chore-btn" data-chore="Organize desk">📚 Organize desk</button>
+                        <button class="chore-btn" data-chore="Grocery shopping">🛒 Grocery shopping</button>
+                        <button class="chore-btn" data-chore="Exercise 30 min">💪 Exercise 30 min</button>
+                        <button class="chore-btn" data-chore="Call family">📞 Call family</button>
+                        <button class="chore-btn" data-chore="Read for 20 min">📖 Read for 20 min</button>
+                    </div>
+                </div>
+                
+                <div id="task-list" class="task-list">
+                    <!-- Tasks will be added here by JavaScript -->
+                </div>
+                
+                <div id="completion-message" class="completion-message hidden">
+                    <h3>🎉 Congratulations!</h3>
+                    <p>You've completed all your tasks and your plant is in full bloom!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
 </html>

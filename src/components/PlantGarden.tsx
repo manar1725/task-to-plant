@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Droplets, Sun, Leaf } from "lucide-react";
+import { SeedStage, SproutStage, YoungPlantStage, MaturePlantStage, BloomingStage } from "./PlantStages";
 
 interface Plant {
   id: string;
@@ -62,58 +63,39 @@ export const PlantGarden = ({ plant, tasksCompleted, totalTasks }: PlantGardenPr
               <div className="absolute bottom-0 w-full h-8 bg-gradient-to-t from-amber-800 to-amber-600 rounded-b-full"></div>
               
               {/* Growth stages */}
-              <div className="relative w-full h-full flex items-end justify-center pb-8">
-                {/* Seed stage (0-10%) */}
-                {plant.growthStage >= 0 && (
-                  <div className="absolute bottom-2 w-2 h-2 bg-amber-900 rounded-full"></div>
-                )}
-                
-                {/* Sprout stage (10-30%) */}
-                {plant.growthStage >= 10 && (
-                  <div className="absolute bottom-4 w-1 bg-green-600 rounded-t-full transition-all duration-1000"
-                       style={{ height: `${Math.min((plant.growthStage - 10) / 20 * 20, 20)}px` }}>
+              <div className="relative w-full h-full flex items-end justify-center pb-8 transition-all duration-700">
+                {/* Seed stage (0-20%) */}
+                {plant.growthStage >= 0 && plant.growthStage < 20 && (
+                  <div className="absolute bottom-4 transition-all duration-700 animate-fade-in">
+                    <SeedStage stage={plant.growthStage} />
                   </div>
                 )}
                 
-                {/* Small plant with leaves (30-60%) */}
-                {plant.growthStage >= 30 && (
-                  <div className="absolute bottom-4 flex flex-col items-center">
-                    <div className="w-2 bg-green-600 rounded-t-full transition-all duration-1000"
-                         style={{ height: `${Math.min((plant.growthStage - 30) / 30 * 40, 40)}px` }}>
-                    </div>
-                    <div className="absolute top-2 flex gap-1">
-                      <div className="w-2 h-2 bg-green-500 rounded-full -rotate-12"></div>
-                      <div className="w-2 h-2 bg-green-500 rounded-full rotate-12"></div>
-                    </div>
+                {/* Sprout stage (20-40%) */}
+                {plant.growthStage >= 20 && plant.growthStage < 40 && (
+                  <div className="absolute bottom-4 transition-all duration-700 animate-fade-in">
+                    <SproutStage stage={plant.growthStage} />
                   </div>
                 )}
                 
-                {/* Mature plant (60-90%) */}
-                {plant.growthStage >= 60 && (
-                  <div className="absolute bottom-4 flex flex-col items-center">
-                    <div className="w-3 bg-green-700 rounded-t-full transition-all duration-1000"
-                         style={{ height: `${Math.min((plant.growthStage - 60) / 30 * 60, 60)}px` }}>
-                    </div>
-                    <div className="absolute top-1 flex gap-2">
-                      <div className="w-3 h-4 bg-green-500 rounded-full -rotate-45 -translate-x-1"></div>
-                      <div className="w-3 h-4 bg-green-500 rounded-full rotate-45 translate-x-1"></div>
-                    </div>
-                    <div className="absolute top-4 flex gap-3">
-                      <div className="w-2 h-3 bg-green-400 rounded-full -rotate-30"></div>
-                      <div className="w-2 h-3 bg-green-400 rounded-full rotate-30"></div>
-                    </div>
+                {/* Young plant with leaves (40-65%) */}
+                {plant.growthStage >= 40 && plant.growthStage < 65 && (
+                  <div className="absolute bottom-4 transition-all duration-700 animate-fade-in">
+                    <YoungPlantStage stage={plant.growthStage} plantType={plant.id} />
                   </div>
                 )}
                 
-                {/* Full bloom with final plant image (90-100%) */}
-                {plant.growthStage >= 90 && (
-                  <div className="absolute bottom-0 w-full h-full flex items-end justify-center pb-8 transition-all duration-1000"
-                       style={{ opacity: (plant.growthStage - 90) / 10 }}>
-                    <img 
-                      src={plant.image} 
-                      alt={plant.name}
-                      className="w-32 h-32 object-cover rounded-lg"
-                    />
+                {/* Mature plant (65-85%) */}
+                {plant.growthStage >= 65 && plant.growthStage < 85 && (
+                  <div className="absolute bottom-4 transition-all duration-700 animate-fade-in">
+                    <MaturePlantStage stage={plant.growthStage} plantType={plant.id} />
+                  </div>
+                )}
+                
+                {/* Full bloom (85-100%) */}
+                {plant.growthStage >= 85 && (
+                  <div className="absolute bottom-4 transition-all duration-1000 animate-scale-in">
+                    <BloomingStage stage={plant.growthStage} plantType={plant.id} />
                   </div>
                 )}
               </div>
